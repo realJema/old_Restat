@@ -5,11 +5,7 @@ To do
 add record design
     [x]add record form on left
     [x]make form work
-    sorting to show similar records as matricule entered
-dynamic sorting
+    [x]sorting to show similar records as matricule entered
+[x]dynamic sorting
 crud datatable
 importing excel files
-Database
-    per dept
-    per level
-    per course

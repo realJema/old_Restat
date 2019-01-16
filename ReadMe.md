@@ -12,3 +12,13 @@ Make sure to place your folder in the webserver folder
 
 ### localhost/www
 run it using this address
+
+### Working pages
+I was in charge of the student module, so only the restat/students.php page is operational
+
+
+### To-do
+- Implement statistic map
+- database formalization
+- crud datatable
+- import excel, csv files
