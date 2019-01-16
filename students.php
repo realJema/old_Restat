@@ -304,7 +304,7 @@
             <!-- filter table -->
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
-                  <div class="dashboard_graph">
+                  <div id="filter_table" class="dashboard_graph">
 
                     <div class="row x_title">
                       <div class="col-md-6">
@@ -851,38 +851,34 @@
           } );
 
           // filter by criterias
-          // redundant implement but works, filters the data according to criterias
-
           function filter() {
-            var course = $('#cour').val()
-            var lvl = $('#lvl').val()
-            var dept = $('#dept').val()
+            // filters through the criterias which arent selected as all
+            var searchTerms = [];
+            var cour = $('#cour').val();
+            var lvl = $('#lvl').val();
+            var dept = $('#dept').val();
 
-            if(course == 'All' && lvl == 'All' && dept == 'All'){
+            $('#filter_table select').filter(
+              function(){
+                if($(this).val()!="All"){
+                  searchTerms.push($(this).attr('id'));
+                }
+              });
+            if(typeof eval(searchTerms[2]) != 'undefined'){
+              table.search(eval(searchTerms[0]) + ' ' + eval(searchTerms[1]) + ' ' + eval(searchTerms[2])).draw();
+            }
+            else if(typeof eval(searchTerms[1]) != 'undefined'){
+              table.search(eval(searchTerms[0]) + ' ' + eval(searchTerms[1])).draw();
+            }
+            else if(typeof eval(searchTerms[0]) != 'undefined'){
+              table.search(eval(searchTerms[0])).draw();
+            }
+            else{
               table.search('').draw();
             }
-            else if(course == 'All' && lvl == 'All'){
-              table.search(dept).draw();
-            }
-            else if(course == 'All' && dept == 'All') {
-              table.search(lvl).draw();
-            }
-            else if(lvl == 'All' && dept == 'All') {
-              table.search(course).draw();
-            }
-            else if(dept == 'All') {
-              table.search(course + ' ' + lvl).draw();
-            }
-            else if(lvl == 'All') {
-              table.search(course + ' ' + dept).draw();
-            }
-            else if(course == 'All') {
-              table.search(dept + ' ' + lvl).draw();
-            }
-            else {
-              table.search(dept + ' ' + lvl + ' ' + course).draw();
-
-            }
+            // query = searchTerms.join(' ');
+            // console.log(query);
+            // console.log(eval(query));
           }
         </script>
         <!-- /datepicker -->
