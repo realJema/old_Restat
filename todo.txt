@@ -1,0 +1,15 @@
+To do
+[x]dynamic refresh of datatables
+    generated table from datatables javascript using ajaxsource from a php request, data was passed as json
+    used ajax reload
+add record design
+    [x]add record form on left
+    [x]make form work
+    sorting to show similar records as matricule entered
+dynamic sorting
+crud datatable
+importing excel files
+Database
+    per dept
+    per level
+    per course
