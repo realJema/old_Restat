@@ -1,5 +1,15 @@
 // wait for the DOM to be loaded
 $(document).ready(function() {
+  // function to generate table from course selection 
+  $('.generateTable').click(function() {
+    alert(this.id);
+    if(this.id !="All"){
+        table.search(this.id).draw();
+    }
+    else{
+      table.search('').draw();
+    }
+  });
   // ajax submit for the record form(page doesn't get reloaded, works with js/jquery.form.js plugin)
   $('#recordForm').ajaxForm(function() {
     // variables
@@ -71,7 +81,10 @@ $(document).ready(function() {
 
     });
 
-  // This filters the table according to the information inputed as matricule
-  $('#mat_input').on( 'keyup', function () {
-    table.search( $(this).val() ).draw();
-  } );
+// This filters the table according to the information inputed as matricule
+$('#mat_input').on( 'keyup', function () {
+  table.search( $(this).val() ).draw();
+} );
+
+
+

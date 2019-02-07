@@ -9,3 +9,15 @@ add record design
 [x]dynamic sorting
 crud datatable
 importing excel files
+
+Courses page
+    coursedb
+        course name
+        course code
+        course master
+        credit value
+        description
+grahps
+    pie chart representing grades
+    point chart to show all students position on graph and concentration
+    hexagonal graph to show success rates in courses

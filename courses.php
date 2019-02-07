@@ -1,3 +1,21 @@
+<?php   
+ //load_data_select.php  
+ $connect = mysqli_connect("localhost","root","","ubstud");
+ function fill_product($connect)  
+ {  
+      $output = '';  
+      $sql = "SELECT * FROM product";  
+      $result = mysqli_query($connect, $sql);  
+      while($row = mysqli_fetch_array($result))  
+      {  
+           $output .= '<div class="col-md-3">';  
+           $output .= '<div id="'.$row["code"].'" class="generateTable" style="border: 1px solid #ccc;padding: 0 10px;margin-bottom: 20px;min-width: 150px;"><h4>'.$row["code"].'</h4><p>'.$row["title"].'</p>';   
+           $output .=     '</div>';  
+           $output .=     '</div>';  
+      }  
+      return $output;  
+ }  
+ ?> 
 <!DOCTYPE html>
 <html lang="en">
 
@@ -81,9 +99,9 @@
                     </li>
                     <li><a><i class="fa fa-bank"></i> Department </a>
                     </li>
-                    <li><a href="courses.php">><i class="fa fa-book"></i> Courses </a>
+                    <li><a><i class="fa fa-book"></i> Courses </a>
                     </li>
-                    <li><a href="students.php"><i class="fa fa-users"></i> Students </a>
+                    <li><a href="Students.php"><i class="fa fa-users"></i> Students </a>
                     </li>
                     <li><a><i class="fa fa-pie-chart"></i> Reports </a>
                     </li>
@@ -393,8 +411,60 @@
             <div class="clearfix"></div>
 
               <div class="row">
-                
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                  <div class="course_filters">
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                      Add Course
+                    </button>
+                     <div class="row">
+                      <h4>Filter by</h4>
+                      <div class="col-md-8">
+                        <!-- department -->
+                        <div class="col-md-12">
+                          <label for="exampleSelect1">Department</label>
+                          <select class="form-control" id="dept_filter" onchange="filter()" name="level">
+                            <option value="">Show All Departments</option> 
+                            <option value="CEF">Computer Engineering</option>
+                            <option value="EEF">Electrical Engineering</option>
+                          </select>
+                        </div>
+                        <!-- level -->
+                        <div class="col-md-12">
+                          <label for="exampleSelect1">Level</label>
+                          <select class="form-control" id="level_filter" onchange="filter()" name="level">
+                            <option value="">Show All Levels</option>
+                            <option value="100">100</option>
+                            <option value="200">200</option>
+                            <option value="300">300</option>
+                            <option value="400">400</option>
+                            <option value="500">500</option>
+                          </select>
+                        </div>
+                        <!-- level -->
+                        <div class="col-md-12">
+                          <label for="exampleSelect1">Products</label>
+                         <select class="form-control" name="brand" id="semester_filter">  
+                              <option value="">Show All Semester</option>  
+                              <option value="1">1st Semester</option> 
+                              <option value="2">2nd Semester</option> 
+                         </select>  
+                        </div>
+                        <div class="clearfix"></div>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="course_list">
+                    <h4>Course List</h4>
+                    <div class="container">
+                       <div class="row" id="show_product">  
+                            <?php echo fill_product($connect);?>  
+                       </div>  
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
                         <div class="x_panel">
                           <div class="x_title">
                             <h2>Responsive example <small>Users</small></h2>
@@ -416,51 +486,7 @@
                             <div class="clearfix"></div>
                           </div>
                           <div class="x_content">
-                            <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                              Add Record
-                            </button>
-                            <div class="row">
-                                <div class="col-md-12 col-sm-12 col-xs-12">
-                                  <div id="filter_table" class="dashboard_graph">
-                                    <!-- department -->
-                                    <div class="col-md-4">
-                                      <label for="exampleSelect1">Department</label>
-                                      <select class="form-control" id="dept" onchange="filter()" name="level">
-                                        <option selected>All</option>
-                                        <option>Computer Engineering</option>
-                                        <option>Electrical Engineering</option>
-                                      </select>
-                                    </div>
-                                    <!-- level -->
-                                    <div class="col-md-4">
-                                      <label for="exampleSelect1">Level</label>
-                                      <select class="form-control" id="lvl" onchange="filter()" name="level">
-                                        <option selected>All</option>
-                                        <option>100</option>
-                                        <option>200</option>
-                                        <option>300</option>
-                                        <option>400</option>
-                                        <option>500</option>
-                                      </select>
-                                    </div>
-                                    <!-- course -->
-                                    <div class="col-md-4">
-                                      <label for="exampleSelect1">Course</label>
-                                      <select class="form-control" id="cour" onchange="filter()" name="level">
-                                        <option selected>All</option>
-                                        <option>CEF401</option>
-                                        <option>EEF211</option>
-                                        <option>CEF305</option>
-                                        <option>CEF521</option>
-                                        <option>CEF100</option>
-                                      </select>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                  </div>
-                                </div>
-
-                            </div>
+                           
                             <br />
                             <p class="text-muted font-13 m-b-30">
                             </p>
@@ -555,6 +581,24 @@
                 responsive: !0
               })
         </script>
+        <script>  
+         $(document).ready(function(){  
+            $('#semester_filter,#level_filter,#dept_filter').change(function(){  
+               var the_semester = $('#semester_filter').val();
+               var the_level = $('#level_filter').val();
+               var the_dept = $('#dept_filter').val();
+              // alert(the_semester + the_dept + the_level);
+               $.ajax({  
+                    url:"getCourseList.php",  
+                    method:"POST",  
+                    data:{the_semester:the_semester, the_level:the_level, the_dept:the_dept},  
+                    success:function(data){  
+                         $('#show_product').html(data);  
+                    }  
+               });  
+            });  
+         });  
+        </script>  
         <script type="text/javascript">
           $(document).ready(function() {
             $('#datatable').dataTable();
@@ -577,6 +621,7 @@
         </script>
         <!-- /dashbord linegraph -->
         <!-- <script src="js/bootstrap.min.js"></script> -->
+
 
         <!-- gauge js -->
         <script type="text/javascript" src="js/gauge/gauge.min.js"></script>
@@ -841,44 +886,6 @@
             });
           });
         </script>
-        <script>
-          // This filters the table according to the information inputed as matricule
-          $('#mat_input').on( 'keyup', function () {
-            table.search( $(this).val() ).draw();
-          } );
-
-          // filter by criterias
-          function filter() {
-            // filters through the criterias which arent selected as all
-            var searchTerms = [];
-            var cour = $('#cour').val();
-            var lvl = $('#lvl').val();
-            var dept = $('#dept').val();
-
-            $('#filter_table select').filter(
-              function(){
-                if($(this).val()!="All"){
-                  searchTerms.push($(this).attr('id'));
-                }
-              });
-            if(typeof eval(searchTerms[2]) != 'undefined'){
-              table.search(eval(searchTerms[0]) + ' ' + eval(searchTerms[1]) + ' ' + eval(searchTerms[2])).draw();
-            }
-            else if(typeof eval(searchTerms[1]) != 'undefined'){
-              table.search(eval(searchTerms[0]) + ' ' + eval(searchTerms[1])).draw();
-            }
-            else if(typeof eval(searchTerms[0]) != 'undefined'){
-              table.search(eval(searchTerms[0])).draw();
-            }
-            else{
-              table.search('').draw();
-            }
-            // query = searchTerms.join(' ');
-            // console.log(query);
-            // console.log(eval(query));
-          }
-        </script>
-        <!-- /datepicker -->
         <!-- /footer content -->
 
 </body>
